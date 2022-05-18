@@ -5,14 +5,8 @@ namespace PreDemoExam2022App.Common.Repository
 {
     public class DatabaseContext : DbContext
     {
+        public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
-
-        private DatabaseContext()
-        {
-            Database.Migrate();
-        }
-
-        public static DatabaseContext Create() => new();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

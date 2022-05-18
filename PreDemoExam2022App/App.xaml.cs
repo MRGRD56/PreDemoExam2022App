@@ -1,12 +1,10 @@
 ﻿using PreDemoExam2022App.Windows.MainWindow;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using PreDemoExam2022App.Common.Repository;
+using Microsoft.EntityFrameworkCore;
+using PreDemoExam2022App.Common.Services;
+using PreDemoExam2022App.Common.Common;
 
 namespace PreDemoExam2022App
 {
@@ -17,5 +15,12 @@ namespace PreDemoExam2022App
     {
         public static new MainWindow MainWindow => (MainWindow)Current.MainWindow;
         public static Frame NavigationFrame => MainWindow.MainFrame;
+
+        private static readonly DatabaseInitializationService DatabaseInitializationService = Singleton<DatabaseInitializationService>.GetInstance();
+
+        static App()
+        {
+            DatabaseInitializationService.InitializeDatabase();
+        }
     }
 }

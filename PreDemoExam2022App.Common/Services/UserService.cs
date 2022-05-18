@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PreDemoExam2022App.Common.Model;
 using PreDemoExam2022App.Common.Repository;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,22 +9,60 @@ namespace PreDemoExam2022App.Common.Services
 {
     public class UserService
     {
-        private readonly DatabaseContext _db = DatabaseContext.Create();
+        private readonly DatabaseContext _db = new();
 
-        public UserService()
+        public List<User> GetUsers()
         {
-            if (!_db.Users.Any())
-            {
-                _db.Users.Add(new User("admin", "123123", "Иванов Сергей Петрович"));
-                _db.SaveChanges();
-            }
+            _db.Roles.Load();
+            return _db.Users.ToList();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _db.Users.FindAsync(new object[] {id});
+        }
+
+        public async Task<List<User>> GetUsersAsync()
+        {
+            await _db.Roles.LoadAsync();
+            return await _db.Users.ToListAsync();
+        }
+
+        public async Task<User> AddUserAsync(User user)
+        {
+            await _db.Users.AddAsync(user);
+            await _db.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<User> SaveUserAsync(User user)
+        {
+            //_db.Users.Update(user);
+            //await _db.SaveChangesAsync();
+            //return user;
+            var dbUser = await GetUserByIdAsync(user.Id);
+            dbUser.Login = user.Login;
+            dbUser.Password = user.Password;
+            dbUser.FullName = user.FullName;
+            dbUser.Photo = user.Photo;
+            dbUser.Role = user.Role;
+            dbUser.IsDeleted = user.IsDeleted;
+            await _db.SaveChangesAsync();
+
+            return user;
+        }
+
+        public async Task DeleteUserAsync(User user)
+        {
+            _db.Remove(user);
+            await _db.SaveChangesAsync();
         }
 
         public Task<User> GetUserByCredentialsAsync(string login, string password)
         {
             return _db.Users.FirstOrDefaultAsync(user => (
-                string.Equals(user.Login, login, StringComparison.InvariantCultureIgnoreCase)
-                    && string.Equals(user.Password, password, StringComparison.InvariantCultureIgnoreCase)
+                user.Login.ToLower() == login.ToLower()
+                    && user.Password.ToLower() == password.ToLower()
             ));
         }
     }

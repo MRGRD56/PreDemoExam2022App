@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PreDemoExam2022App.Pages.LoginPage
+namespace PreDemoExam2022App.Pages.UsersPage
 {
     /// <summary>
-    /// Логика взаимодействия для LoginPage.xaml
+    /// Логика взаимодействия для UsersPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class UsersPage : Page
     {
-        public LoginPage()
+        public UsersPage()
         {
             InitializeComponent();
-            LoginTextBox.Focus();
         }
     }
 }

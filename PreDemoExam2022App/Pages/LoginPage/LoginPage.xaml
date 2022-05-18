@@ -7,8 +7,30 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Вход">
-
+    <Page.DataContext>
+        <local:LoginPageViewModel/>
+    </Page.DataContext>
     <Grid>
-        <TextBlock>Hello world</TextBlock>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label HorizontalAlignment="Center">Вход</Label>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">Логин</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Login}" Margin="0 2" Name="LoginTextBox"/>
+                <Label Grid.Row="1" Grid.Column="0">Пароль</Label>
+                <PasswordBox Grid.Row="1" Grid.Column="1" Margin="0 2" Name="PasswordBox"/>
+            </Grid>
+            <Button HorizontalAlignment="Center" Padding="30 3" Margin="0 5 0 0"
+                    Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=PasswordBox}">
+                Войти
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

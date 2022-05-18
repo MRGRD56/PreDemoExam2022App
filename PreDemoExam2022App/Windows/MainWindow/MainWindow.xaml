@@ -12,14 +12,30 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            
-        </Grid>
+        <Border BorderThickness="0 0 0 1" BorderBrush="Black" Padding="15 0">
+            <Grid Grid.Row="0" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock FontSize="16">PreDemoExam2022App</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2" >
+                    <TextBlock FontSize="12" Text="{Binding Auth.User.Login}"/>
+                    <Button Visibility="{Binding Auth.IsAuthenticated, Converter={StaticResource BoolToVisibilityConverter}}"
+                            Command="{Binding LogoutCommand}">
+                        Выход
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
         <Grid Grid.Row="1">
-            <Frame x:Name="MainFrame" Navigated="HandleMainFrameNavigated"/>
+            <Frame x:Name="MainFrame" Navigated="HandleMainFrameNavigated" NavigationUIVisibility="Hidden"/>
         </Grid>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using PreDemoExam2022App.Common.Common;
 using PreDemoExam2022App.Common.Events;
+using PreDemoExam2022App.Common.Exceptions;
 using PreDemoExam2022App.Common.Model;
 using System.Security.Authentication;
 using System.Threading.Tasks;
@@ -20,8 +21,11 @@ namespace PreDemoExam2022App.Common.Services
                 _user = value;
                 OnAuth?.Invoke(this, new AppAuthEventArgs(value));
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(IsAuthenticated));
             }
         }
+
+        public bool IsAuthenticated => User != null;
 
         public event AppAuthEventHandler OnAuth;
 
@@ -30,17 +34,15 @@ namespace PreDemoExam2022App.Common.Services
         /// </summary>
         /// <param name="login"></param>
         /// <param name="password"></param>
-        /// <returns>Successfuly authenticated user</returns>
-        /// <exception cref="AuthenticationException">If the user was not authenticated</exception>
+        /// <returns>Successfuly authenticated user or null</returns>
         public async Task<User> AuthenticateUserAsync(string login, string password)
         {
             var user = await _userService.GetUserByCredentialsAsync(login, password);
-            if (user == null)
+            if (user != null)
             {
-                throw new AuthenticationException("Неверный логин или пароль");
+                User = user;
             }
 
-            User = user;
             return user;
         }
     }

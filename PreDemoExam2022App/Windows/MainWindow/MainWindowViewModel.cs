@@ -3,6 +3,8 @@ using PreDemoExam2022App.Common.Events;
 using PreDemoExam2022App.Common.Model;
 using PreDemoExam2022App.Common.Services;
 using PreDemoExam2022App.Mvvm;
+using PreDemoExam2022App.Pages.LoginPage;
+using PreDemoExam2022App.Utils;
 
 namespace PreDemoExam2022App.Windows.MainWindow
 {
@@ -39,5 +41,11 @@ namespace PreDemoExam2022App.Windows.MainWindow
                 OnPropertyChanged();
             }
         }
+
+        public Command<object> LogoutCommand => new(_ =>
+        {
+            Auth.User = null;
+            App.NavigationFrame.Navigate<LoginPage>();
+        }, _ => Auth.IsAuthenticated);
     }
 }
