@@ -47,5 +47,10 @@ namespace PreDemoExam2022App.Windows.MainWindow
             Auth.User = null;
             App.NavigationFrame.Navigate<LoginPage>();
         }, _ => Auth.IsAuthenticated);
+
+        public Command<object> GoBackCommand => new(_ => 
+        {
+            App.NavigationFrame.GoBack();
+        }, _ => App.NavigationFrame?.CanGoBack == true);
     }
 }

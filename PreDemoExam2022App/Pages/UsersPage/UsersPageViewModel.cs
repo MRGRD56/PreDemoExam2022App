@@ -63,6 +63,7 @@ namespace PreDemoExam2022App.Pages.UsersPage
             }
 
             await _userService.DeleteUserAsync(SelectedUser);
+            Users.Remove(SelectedUser);
         }, _ => SelectedUser != null);
     }
 }

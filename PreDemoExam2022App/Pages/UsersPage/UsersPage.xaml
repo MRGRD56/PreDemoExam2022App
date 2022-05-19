@@ -28,7 +28,7 @@
                 <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
                 <DataGridTextColumn Header="Имя" Binding="{Binding FullName}"/>
-                <DataGridTextColumn Header="Роль" Binding="{Binding Role.Name}"/>
+                <DataGridTextColumn Header="Роль" Binding="{Binding Role, Converter={StaticResource UserRoleConverter}}"/>
                 <DataGridCheckBoxColumn Header="Удалено" Binding="{Binding IsDeleted}"/>
             </DataGrid.Columns>
         </DataGrid>

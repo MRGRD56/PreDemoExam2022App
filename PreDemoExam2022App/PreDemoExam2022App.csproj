@@ -9,7 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\ArrowBack.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="folder.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\ArrowBack.png" />
   </ItemGroup>
 
   <ItemGroup>
